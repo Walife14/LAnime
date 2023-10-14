@@ -1,3 +1,16 @@
-<p class="text-6xl">
-  home works!
-</p>
+<div class="h-screen relative">
+  <div class="h-[80vh] bg-header-texture bg-cover bg-fixed flex justify-center">
+    <h1 class="text-3xl font-bold mt-40">WELCOME</h1>
+  </div>
+  <img class="h-[60vh] absolute bottom-20 left-1/2 -translate-x-1/2" src="../../assets/images/header-character-385x755.png" alt="Boku no Hero Midoriya">
+</div>
+<div class="mx-4">
+  <div>
+    <h2 class="text-lg">POPULAR</h2>
+    <ul class="grid grid-cols-2">
+      <li *ngFor="let anime of animes">
+        <span>{{ anime.name }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

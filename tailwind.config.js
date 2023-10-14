@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.{html,js}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'header-texture': "url('src/assets/images/header-texture.svg')"
+      }
+    },
   },
   plugins: [],
 }
