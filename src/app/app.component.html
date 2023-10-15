@@ -1,1 +1,25 @@
+<header class="absolute top-0 z-10 flex flex-wrap w-full">
+    <div class="flex justify-between w-full p-4">
+        <a>
+            <img class="h-6" src="../assets/icons/lanime-logo.svg" alt="LAnime Logo">
+        </a>
+        <button type="button" (click)="displayNav =! displayNav"><img class="h-6" [src]="displayNav ? '../assets/icons/x-mark.svg' : '../assets/icons/hamburger.svg'"></button>
+    </div>
+    <nav class="w-full overflow-hidden transition-all" [ngClass]="displayNav ? 'max-h-[100rem]' : 'max-h-0'">
+        <ul class="bg-white grid grid-cols-2 gap-y-4 p-4 text-center">
+            <li class="flex justify-center col-span-2 transition-all" role="search">
+                <input
+                    class="bg-background p-1 focus:outline-none overflow-hidden"
+                    type="text"
+                    aria-label="search term"
+                >
+                <button class="bg-background" type="button" aria-label="search">
+                    <img class="h-6 mx-auto" src="../assets/icons/search.svg">
+                </button>
+            </li>
+            <li><a>Anime</a></li>
+            <li><a>Manga</a></li>
+        </ul>
+    </nav>
+</header>
 <router-outlet></router-outlet>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'LAnime';
+
+  displayNav: boolean = false;
+
+  // close nav on scroll
+  @HostListener('document:scroll', ['$event'])
+  public onViewportScroll() {
+    this.displayNav = false;
+  }
+
 }
