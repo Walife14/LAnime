@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,12 @@ export class AppComponent {
   title = 'LAnime';
 
   displayNav: boolean = false;
+
+  constructor(private router: Router) {
+    router.events.subscribe((val) => {
+      this.displayNav = false;
+    })
+  }
 
   // close nav on scroll
   @HostListener('document:scroll', ['$event'])
