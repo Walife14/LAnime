@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AnimeComponent } from './anime/anime.component';
+import { AnimeSearchComponent } from './anime-search/anime-search.component';
 
 @NgModule({
-  declarations: [		
+  declarations: [			
     AppComponent,
     HomeComponent,
-      AnimeComponent
+      AnimeComponent,
+      AnimeSearchComponent
    ],
   imports: [
     BrowserModule,
