@@ -1,0 +1,14 @@
+<div class="mt-[3.5rem] mx-4">
+  <img class="w-full" src="../../assets/images/temporary-anime-cover.jpg" alt="Boku no Hero Academia cover">
+  <h1 class="text-3xl font-bold">Boku no Hero Academia</h1>
+  <ul class="flex gap-x-2 gap-y-1 flex-wrap my-2">
+    <li class="bg-background py-1 px-2 rounded-md text-sm font-light" *ngFor="let genre of genres">{{ genre }}</li>
+  </ul>
+  <p>Midoriya Izuku was just a regular middle school student in a world where people with superpowers known as Quirks are the norm. However, he dreams of one day becoming a Hero, despite being bullied by his classmates for not having a Quirk. After being the only one to try and save his childhood friend, Katsuki, from a Villain, All Might, the world's greatest Hero, bestows upon him his own quirk, One For All. The story follows Izuku's entrance into Yuuei High School, a school that cultivates the next generation of Heroes.</p>
+  <ul class="grid grid-cols-4 gap-2 mt-2 mb-10">
+    <li class="col-span-1 text-center text-xs" *ngFor="let character of characters.slice(0,4)">
+      <img class="rounded-full" src="../../assets/images/temporary-character-image.jpg" alt="Character image">
+      <span>{{ character.name }}</span>
+    </li>
+  </ul>
+</div>
