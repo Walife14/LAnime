@@ -3,13 +3,13 @@
   <div class="mb-4">
     <div>
       <!-- Search by input -->
-      <div class="flex justify-center col-span-2 transition-all" role="search">
+      <div class="flex justify-center col-span-2 transition-all mb-4" role="search">
         <input
-            class="bg-background p-2 focus:outline-none overflow-hidden rounded-none"
-            type="text"
-            aria-label="search term"
-            id="searchInput"
-            [formControl]="searchInput"
+          class="bg-background p-2 focus:outline-none overflow-hidden rounded-none"
+          type="text"
+          aria-label="search term"
+          placeholder="Search..."
+          [formControl]="searchInput"
         >
         <button class="bg-background p-2" type="button" aria-label="search" (click)="searchAnimeByName()">
             <img class="h-6 mx-auto" src="../assets/icons/search.svg">
@@ -47,16 +47,10 @@
   </div>
   <!-- display anime section -->
   <div>
-    <ul *ngIf="animes" class="grid grid-cols-2 gap-4">
-      <!-- <li *ngFor="let anime of animes | async">
+    <ul *ngIf="animes" class="grid grid-cols-2 gap-2">
+      <li class="flex" *ngFor="let anime of animes">
         <a [routerLink]="'/anime/' + anime.mal_id">
-          <img [src]="anime.images.jpg.large_image_url" alt="Boku no Hero Academia image">
-          <span class="text-sm">{{ anime.title }}</span>
-        </a>
-      </li> -->
-      <li *ngFor="let anime of animes">
-        <a [routerLink]="'/anime/' + anime.mal_id">
-          <img [src]="anime.images.jpg.large_image_url" alt="Boku no Hero Academia image">
+          <img class="h-[285px] w-full" [src]="anime.images.jpg.large_image_url" alt="Boku no Hero Academia image">
           <span class="text-sm">{{ anime.title }}</span>
         </a>
       </li>

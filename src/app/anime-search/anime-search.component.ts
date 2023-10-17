@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { AnimeService } from '../data/service/anime.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 import { Observable, forkJoin } from 'rxjs';
 
@@ -21,7 +21,9 @@ export class AnimeSearchComponent implements OnInit {
   pageNumber: number = 1;
 
   // search input
-  searchInput = new FormControl("searchInput")
+  haveWeSearched?: boolean = false;
+
+  searchInput = new FormControl('', [Validators.required, Validators.minLength(2)])
 
   // sort by
   showSortbyList: boolean = false;
@@ -54,33 +56,67 @@ export class AnimeSearchComponent implements OnInit {
     console.log(this.selectedGenres);
   }
 
-  searchAnimeByName() {
-    this.animeService.searchAnime(this.searchInput.value).subscribe({
-      next: data => {
-        console.log(data)
-      },
-      error: e => 
-      console.log('We got an error: ' + e)
-    })
+  searchAnimeByName(): void {
+    if (this.searchInput.errors) {
+      console.warn("Search input is invalid")
+    } else {
+      this.haveWeSearched = true
+      this.pageNumber = 1
+
+      this.animeService.searchAnime(this.searchInput.value, this.pageNumber)
+        .subscribe({
+          next: (data) => {
+            this.animes = data.data
+          },
+          error: e => 
+          console.log('We got an error searching for anime: ' + e)
+        })
+    }
+
+    // this.animeService.searchAnime(this.searchInput.value).subscribe({
+    //   next: data => {
+    //     console.log(data)
+    //   },
+    //   error: e => 
+    //   console.log('We got an error: ' + e)
+    // })
   }
 
   loadAnime(): void {
-    this.animeService.getAnime(this.pageNumber)
-      .subscribe({
-        next: (data) => {
-          if(this.animes === undefined) {
-            this.animes = data.data
-          } else {
-            this.animes = [...this.animes, ...data.data]
-            console.log(this.animes)
-          }
-        },
-        error: (e) => {
-          console.error('We have an error fetching anime: ', e)
-        }
-      })
+    if (this.haveWeSearched) {
+      this.pageNumber = this.pageNumber + 1
 
-    this.pageNumber = this.pageNumber + 1
+      this.animeService.searchAnime(this.searchInput.value, this.pageNumber)
+      .subscribe({
+          next: (data) => {
+            if(this.animes === undefined) {
+              this.animes = data.data
+            } else {
+              this.animes = [...this.animes, ...data.data]
+              console.log(this.animes)
+            }
+          },
+          error: e => 
+          console.log('We got an error searching for anime: ' + e)
+        })
+    } else {
+      this.animeService.getAnime(this.pageNumber)
+        .subscribe({
+          next: (data) => {
+            if(this.animes === undefined) {
+              this.animes = data.data
+            } else {
+              this.animes = [...this.animes, ...data.data]
+              console.log(this.animes)
+            }
+          },
+          error: (e) => {
+            console.error('We have an error fetching anime: ', e)
+          }
+        })
+      this.pageNumber = this.pageNumber + 1
+    }
+
   }
 
 

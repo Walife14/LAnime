@@ -19,8 +19,8 @@ export class AnimeService {
     return this.http.get('https://api.jikan.moe/v4/anime?limit=6&page=' + pageNumber)
   }
 
-  searchAnime(q: any) {
-    return this.http.get('https://api.jikan.moe/v4/anime?q='+ q)
+  searchAnime(q: any, pageNumber: number): Observable<any> {
+    return this.http.get(`https://api.jikan.moe/v4/anime?limit=6&page=${pageNumber}&q=${q}`)
   }
 
 }
