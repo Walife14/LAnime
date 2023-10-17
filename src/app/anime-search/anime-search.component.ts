@@ -1,5 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { AnimeService } from '../data/service/anime.service';
+import { FormControl } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
 
+const CACHE_KEY = 'httpAnimesCache'
+export interface AnimeData {
+  id: number;
+  title: string;
+  imgUrl: string;
+}
 @Component({
   selector: 'app-anime-search',
   templateUrl: './anime-search.component.html',
@@ -7,20 +17,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnimeSearchComponent implements OnInit {
 
-  animes: { id: string, name: string, imgUrl: string }[] = [
-    { id: '1', name: 'Boku no Hero', imgUrl: 'www.imgUrl.com'},
-    { id: '2', name: 'Naruto', imgUrl: 'www.imgUrl.com'},
-    { id: '3', name: 'One Piece', imgUrl: 'www.imgUrl.com'},
-    { id: '4', name: 'Death Note', imgUrl: 'www.imgUrl.com'},
-    { id: '5', name: 'Haikyu!', imgUrl: 'www.imgUrl.com'},
-    { id: '6', name: 'Kuroko no basket', imgUrl: 'www.imgUrl.com'},
-    { id: '7', name: 'Dragon Ball', imgUrl: 'www.imgUrl.com'},
-    { id: '8', name: 'Yu Gi Oh!', imgUrl: 'www.imgUrl.com'},
-    { id: '9', name: 'Beyblade!', imgUrl: 'www.imgUrl.com'},
-    { id: '10', name: 'Pokemon', imgUrl: 'www.imgUrl.com'},
-    { id: '11', name: 'Bleach', imgUrl: 'www.imgUrl.com'},
-    { id: '12', name: 'Hunter x Hunter', imgUrl: 'www.imgUrl.com'}
-  ]
+  animes?: any[];
+  pageNumber: number = 1;
+
+  // search input
+  searchInput = new FormControl("searchInput")
 
   // sort by
   showSortbyList: boolean = false;
@@ -30,9 +31,21 @@ export class AnimeSearchComponent implements OnInit {
   selectedGenres: Set<string> = new Set<string>()
   showGenresList: boolean = false;
   
-  constructor() { }
+  constructor(private animeService: AnimeService) { }
 
   ngOnInit() {
+    // Get initial component load animes to display
+    // this.animeService.getAnime().subscribe({
+    //   next: (data: any) => {
+    //     this.animes = data
+    //     console.log(data);
+    //   },
+    //   error: (e) => {
+    //     console.error(e)
+    //   }
+    // })
+
+    this.loadAnime()
   }
 
   changeSelectedGenres(genre: string):void {
@@ -40,5 +53,53 @@ export class AnimeSearchComponent implements OnInit {
     this.showGenresList = false;
     console.log(this.selectedGenres);
   }
+
+  searchAnimeByName() {
+    this.animeService.searchAnime(this.searchInput.value).subscribe({
+      next: data => {
+        console.log(data)
+      },
+      error: e => 
+      console.log('We got an error: ' + e)
+    })
+  }
+
+  loadAnime(): void {
+    this.animeService.getAnime(this.pageNumber)
+      .subscribe({
+        next: (data) => {
+          if(this.animes === undefined) {
+            this.animes = data.data
+          } else {
+            this.animes = [...this.animes, ...data.data]
+            console.log(this.animes)
+          }
+        },
+        error: (e) => {
+          console.error('We have an error fetching anime: ', e)
+        }
+      })
+
+    this.pageNumber = this.pageNumber + 1
+  }
+
+
+
+
+
+
+
+
+
+  // @HostListener('window:scroll', [])
+  // onScroll(): void {
+  //   if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+  //     // this.animeService.getAnime().subscribe({
+  //     //   next: (data: any) {
+
+  //     //   }
+  //     // })
+  //   }
+  // }
 
 }

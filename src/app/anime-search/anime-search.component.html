@@ -2,6 +2,19 @@
   <!-- filter section -->
   <div class="mb-4">
     <div>
+      <!-- Search by input -->
+      <div class="flex justify-center col-span-2 transition-all" role="search">
+        <input
+            class="bg-background p-2 focus:outline-none overflow-hidden rounded-none"
+            type="text"
+            aria-label="search term"
+            id="searchInput"
+            [formControl]="searchInput"
+        >
+        <button class="bg-background p-2" type="button" aria-label="search" (click)="searchAnimeByName()">
+            <img class="h-6 mx-auto" src="../assets/icons/search.svg">
+        </button>
+      </div>
       <!-- sort by dropdown -->
       <div class="relative mb-4">
         <button class="w-full bg-white flex items-center justify-between rounded-md px-2 py-1 ring-1 ring-black ring-inset ring-opacity-50" aria-expanded="true" (click)="showSortbyList = !showSortbyList">
@@ -34,13 +47,20 @@
   </div>
   <!-- display anime section -->
   <div>
-    <ul class="grid grid-cols-2 gap-4">
+    <ul *ngIf="animes" class="grid grid-cols-2 gap-4">
+      <!-- <li *ngFor="let anime of animes | async">
+        <a [routerLink]="'/anime/' + anime.mal_id">
+          <img [src]="anime.images.jpg.large_image_url" alt="Boku no Hero Academia image">
+          <span class="text-sm">{{ anime.title }}</span>
+        </a>
+      </li> -->
       <li *ngFor="let anime of animes">
-        <a [routerLink]="'/anime/' + anime.id">
-          <img src="../../assets/images/temporary-anime-cover.jpg" alt="Boku no Hero Academia image">
-          <span class="text-sm">{{ anime.name }}</span>
+        <a [routerLink]="'/anime/' + anime.mal_id">
+          <img [src]="anime.images.jpg.large_image_url" alt="Boku no Hero Academia image">
+          <span class="text-sm">{{ anime.title }}</span>
         </a>
       </li>
     </ul>
+    <button class="w-full py-1 my-5 ring-black ring-1" type="button" (click)="loadAnime()">Load More</button>
   </div>
 </div>
