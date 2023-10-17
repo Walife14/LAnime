@@ -3,6 +3,7 @@ import { AnimeService } from '../data/service/anime.service';
 import { FormControl, Validators } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 import { Observable, forkJoin } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 const CACHE_KEY = 'httpAnimesCache'
 export interface AnimeData {
@@ -33,27 +34,40 @@ export class AnimeSearchComponent implements OnInit {
   selectedGenres: Set<string> = new Set<string>()
   showGenresList: boolean = false;
   
-  constructor(private animeService: AnimeService) { }
+  constructor(private animeService: AnimeService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // Get initial component load animes to display
-    // this.animeService.getAnime().subscribe({
-    //   next: (data: any) => {
-    //     this.animes = data
-    //     console.log(data);
-    //   },
-    //   error: (e) => {
-    //     console.error(e)
-    //   }
-    // })
-
-    this.loadAnime()
+    this.route.queryParams
+      .subscribe({
+        next: data => {
+          if (data['search']) {
+            this.searchAnimeOnLoad(data['search'])
+          } else {
+            this.loadAnime()
+          }
+        }
+      })
   }
 
   changeSelectedGenres(genre: string):void {
     this.selectedGenres.has(genre) ? this.selectedGenres.delete(genre) : this.selectedGenres.add(genre)
     this.showGenresList = false;
     console.log(this.selectedGenres);
+  }
+
+  searchAnimeOnLoad(queryParamsInput: string): void {
+    this.haveWeSearched = true
+    this.pageNumber = 1
+
+
+    this.animeService.searchAnime(queryParamsInput, this.pageNumber)
+      .subscribe({
+        next: (data) => {
+          this.animes = data.data
+        },
+        error: e => 
+        console.log('We got an error searching for anime: ' + e)
+      })
   }
 
   searchAnimeByName(): void {
@@ -72,14 +86,6 @@ export class AnimeSearchComponent implements OnInit {
           console.log('We got an error searching for anime: ' + e)
         })
     }
-
-    // this.animeService.searchAnime(this.searchInput.value).subscribe({
-    //   next: data => {
-    //     console.log(data)
-    //   },
-    //   error: e => 
-    //   console.log('We got an error: ' + e)
-    // })
   }
 
   loadAnime(): void {

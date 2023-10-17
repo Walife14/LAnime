@@ -13,12 +13,13 @@
                     type="text"
                     aria-label="search term"
                     placeholder="Search..."
+                    [formControl]="searchInput"
                 >
-                <button class="bg-background p-2" type="button" aria-label="search">
+                <button class="bg-background p-2" type="button" aria-label="search" (click)="searchForAnime(searchInput.value)">
                     <img class="h-6 mx-auto" src="../assets/icons/search.svg">
                 </button>
             </li>
-            <li><a routerLink="/anime">Anime</a></li>
+            <li><a routerLink="/explore/anime">Anime</a></li>
             <li><a routerLink="/manga">Manga</a></li>
         </ul>
     </nav>

@@ -14,7 +14,7 @@ const routes: Routes = [
     component: AnimeComponent
   },
   {
-    path: 'anime',
+    path: 'explore/anime',
     component: AnimeSearchComponent
   }
 ];
