@@ -11,8 +11,7 @@
           placeholder="Search..."
           [formControl]="searchInput"
         >
-        <button class="bg-background p-2" type="button" aria-label="search">
-        <!-- <button class="bg-background p-2" type="button" aria-label="search" (click)="searchAnimeByName()"> -->
+        <button class="bg-background p-2" type="button" aria-label="search" (click)="searchForAnime()">
             <img class="h-6 mx-auto" src="../assets/icons/search.svg">
         </button>
       </div>
@@ -57,7 +56,6 @@
         </a>
       </li>
     </ul>
-    <button class="w-full py-1 my-5 ring-black ring-1" type="button">Load More</button>
-    <!-- <button class="w-full py-1 my-5 ring-black ring-1" type="button" (click)="loadAnime()">Load More</button> -->
+    <button class="w-full py-1 my-5 ring-black ring-1" type="button" (click)="getMoreAnime()">Load More</button>
   </div>
 </div>
