@@ -7,20 +7,24 @@ import { Observable, map } from 'rxjs';
 })
 export class AnimeService {
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'X-MAL-Client-ID': 'b4ea4ab5561c9deada4dadf6001296ba'
-    })
-  }
-
   constructor(private http: HttpClient) {}
 
-  getAnime(pageNumber: number): Observable<any> {
-    return this.http.get('https://api.jikan.moe/v4/anime?limit=6&page=' + pageNumber)
+
+  getAnimeList(pageNumber: number, title?: string, orderBy?: string, sortBy?: string): Observable<any> {
+    const apiURL = `https://api.jikan.moe/v4/anime?${title ? 'q=' + title + '&' :''}limit=6&page=${pageNumber}${orderBy ? '&order_by=' + orderBy :''}${sortBy ? '&sort=' + sortBy :''}`
+    return this.http.get(apiURL)
   }
 
-  searchAnime(q: any, pageNumber: number): Observable<any> {
-    return this.http.get(`https://api.jikan.moe/v4/anime?limit=6&page=${pageNumber}&q=${q}`)
-  }
+
+
+
+
+  // getAnime(pageNumber: number): Observable<any> {
+  //   return this.http.get('https://api.jikan.moe/v4/anime?limit=6&page=' + pageNumber)
+  // }
+
+  // searchAnime(q: any, pageNumber: number): Observable<any> {
+  //   return this.http.get(`https://api.jikan.moe/v4/anime?limit=6&page=${pageNumber}&q=${q}`)
+  // }
 
 }
