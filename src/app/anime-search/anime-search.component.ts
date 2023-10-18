@@ -5,6 +5,9 @@ import { map, startWith } from 'rxjs/operators';
 import { Observable, forkJoin } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
+// importing JSON file containing genres with ID and name of each genre
+import importedGenres from '../data/json/genres.json'
+
 const CACHE_KEY = 'httpAnimesCache'
 
 @Component({
@@ -24,14 +27,18 @@ export class AnimeSearchComponent implements OnInit {
   showSortbyList: boolean = false;
 
   // genres
-  genres: string[] = ['Adventure', 'Action', 'Shounen', 'Horror', 'Fantasy']
+  // genres: string[] = ['Adventure', 'Action', 'Shounen', 'Horror', 'Fantasy']
+  genres: {'mal_id': number, "name": string, "url": string, count: number}[] = importedGenres.data
   selectedGenres: Set<string> = new Set<string>()
+  selectedGenresId: Set<string> = new Set<string>()
+
   showGenresList: boolean = false;
 
   // IF: current query params saved to be used in functions
   currentSearchQuery?: string;
   currentOrderBy?: string;
   currentSortBy?: string;
+  // currentSelectedGenres?: string[];
   
   constructor(private animeService: AnimeService, private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(p => {
@@ -44,10 +51,15 @@ export class AnimeSearchComponent implements OnInit {
         this.currentOrderBy = p['orderBy']
         this.currentSortBy = p['sortBy']
 
+        // turning genres selected ID from a set to an array
+        const genresSelected = Array.from(this.selectedGenresId)
+
         this.getAnimeList(
           p['search'] ? p['search'] : undefined,
           p['orderBy'] ? p['orderBy'] : undefined,
-          p['sortBy'] ? p['sortBy'] : undefined)
+          p['sortBy'] ? p['sortBy'] : undefined,
+          genresSelected.length >= 1 ? genresSelected : undefined
+        )
         console.log(p);
       }
     })
@@ -56,8 +68,9 @@ export class AnimeSearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getAnimeList(title?: string, orderBy?: string, sortBy?: string): void {
-    this.animeService.getAnimeList(this.pageNumber, title, orderBy, sortBy)
+  getAnimeList(title?: string, orderBy?: string, sortBy?: string, selectedGenres?: string[]): void {
+    console.log(selectedGenres)
+    this.animeService.getAnimeList(this.pageNumber, title, orderBy, sortBy, selectedGenres)
       .subscribe({
         next: data => {
           if (this.animes) {
@@ -99,9 +112,31 @@ export class AnimeSearchComponent implements OnInit {
 
   }
 
+  changeSelectedGenres(genre: string, genreId: number): void {
+    // if genres are changed the animes fetched should be reset and page number back to 1
+    this.animes = []
+    this.pageNumber = 1
+
+
+    this.selectedGenres.has(genre) ? this.selectedGenres.delete(genre) : this.selectedGenres.add(genre)
+    this.showGenresList = false;
+    this.selectedGenresId.has(genreId.toString()) ? this.selectedGenresId.delete(genreId.toString()) : this.selectedGenresId.add(genreId.toString())
+
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: { genres: Array.from(this.selectedGenres) },
+        queryParamsHandling: 'merge'
+      }
+    )
+  }
+
   searchForAnime(): void {
     // reset everything we have so far
     this.animes = []
+    this.selectedGenresId.clear()
+    this.selectedGenres.clear()
     
     this.pageNumber = 1
 

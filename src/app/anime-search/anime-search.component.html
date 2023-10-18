@@ -33,13 +33,20 @@
       <!-- genre dropdown -->
       <div class="relative">
         <button class="w-full z-10 bg-white flex items-center justify-between rounded-md px-2 py-1 ring-1 ring-black ring-inset ring-opacity-50" aria-expanded="true" (click)="showGenresList = !showGenresList">
-          <span>Select genre</span>
+          <span>Select genre(s)</span>
           <img class="h-5 w-5" src="../../assets/icons/chevron-down.svg">
         </button>
         <ul class="absolute bg-white z-10 w-full rounded-md mt-1 transition-all overflow-scroll" [ngClass]="showGenresList ? 'max-h-[30vh] ring-1 ring-black ring-opacity-5 shadow-lg' : 'max-h-0 -translate-y-1'">
-          <li class="relative cursor-pointer select-none py-1 px-2 hover:bg-background" role="genre option" *ngFor="let genre of genres">
-          <!-- <li class="relative cursor-pointer select-none py-1 px-2 hover:bg-background" role="genre option" *ngFor="let genre of genres" (click)="changeSelectedGenres(genre)"> -->
+          <!-- <li class="relative cursor-pointer select-none py-1 px-2 hover:bg-background" role="genre option" *ngFor="let genre of genres" (click)="changeSelectedGenres(genre)">
             <span>{{ genre }}</span>
+          </li> -->
+          <li
+            class="relative cursor-pointer select-none py-1 px-2 hover:bg-background"
+            role="genre option"
+            *ngFor="let genre of genres"
+            (click)="changeSelectedGenres(genre.name, genre.mal_id)"
+          >
+            <span>{{ genre.name }}</span>
           </li>
         </ul>
       </div>
