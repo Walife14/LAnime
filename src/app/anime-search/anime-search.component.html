@@ -23,7 +23,10 @@
         </button>
         <ul class="absolute bg-white z-10 w-full rounded-md mt-1 transition-all overflow-scroll" [ngClass]="showSortbyList? 'max-h-[30vh] ring-1 ring-black ring-opacity-5 shadow-lg' : 'max-h-0 -translate-y-1'">
           <li class="relative cursor-pointer select-none py-1 px-2 hover:bg-background" role="sort by option">
-            <button type="button">Rating</button>
+            <button type="button" (click)="sortByScore('asc')">Score (asc)</button>
+          </li>
+          <li class="relative cursor-pointer select-none py-1 px-2 hover:bg-background" role="sort by option">
+            <button type="button" (click)="sortByScore('desc')">Score (desc)</button>
           </li>
         </ul>
       </div>
@@ -52,7 +55,7 @@
       <li class="flex" *ngFor="let anime of animes">
         <a [routerLink]="'/anime/' + anime.mal_id">
           <img class="h-[285px] w-full" [src]="anime.images.jpg.large_image_url" alt="Boku no Hero Academia image">
-          <span class="text-sm">{{ anime.title }}{{ anime.score }}</span>
+          <span class="text-sm">{{ anime.title }} - {{ anime.score }}</span>
         </a>
       </li>
     </ul>

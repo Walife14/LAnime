@@ -6,11 +6,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 const CACHE_KEY = 'httpAnimesCache'
-export interface AnimeData {
-  id: number;
-  title: string;
-  imgUrl: string;
-}
+
 @Component({
   selector: 'app-anime-search',
   templateUrl: './anime-search.component.html',
@@ -83,9 +79,12 @@ export class AnimeSearchComponent implements OnInit {
     this.getAnimeList(this.currentSearchQuery, this.currentOrderBy, this.currentSortBy)
   }
 
-  searchForAnime(): void {
-    // reset everything we have so far
+  sortByScore(type: string): void {
+    this.showSortbyList = false;
+
     this.pageNumber = 1
+
+    // reset animes fetched so far
     this.animes = []
 
     // route to this page again but with the new query search, which re-triggers the getAnimeList with the new search value
@@ -93,8 +92,26 @@ export class AnimeSearchComponent implements OnInit {
       [],
       {
         relativeTo: this.route,
-        queryParams: { search: this.searchInput.value },
+        queryParams: { orderBy: 'score', sortBy: type },
         queryParamsHandling: 'merge'
+      }
+    )
+
+  }
+
+  searchForAnime(): void {
+    // reset everything we have so far
+    this.animes = []
+    
+    this.pageNumber = 1
+
+    // route to this page again but with the new query search, which re-triggers the getAnimeList with the new search value
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: { search: this.searchInput.value },
+        queryParamsHandling: ''
       }
     )
   }
