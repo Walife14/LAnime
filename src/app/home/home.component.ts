@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AnimeService } from '../data/service/anime.service';
 
 interface Anime {
   name: string;
@@ -12,24 +13,26 @@ interface Anime {
 })
 export class HomeComponent implements OnInit {
 
-  animes: Array<Anime> = [
-    {
-      name: 'Naruto', imgUrl: 'www.img.com'
-    },
-    {
-      name: 'One Piece', imgUrl: 'www.img.com'
-    },
-    {
-      name: 'Boku no Hero', imgUrl: 'www.img.com'
-    },
-    {
-      name: 'Death Note', imgUrl: 'www.img.com'
-    },
-  ]
+  animes: any[] = [];
 
-  constructor() { }
+  constructor(private animeService: AnimeService) { }
 
   ngOnInit() {
+    this.getAnimeList()
   }
+
+  getAnimeList(): void {
+    this.animeService.getAnimeList(1, undefined, 'favorites', 'desc')
+      .subscribe({
+        next: data => {
+          this.animes = data.data.slice(0, 4)
+          console.log(this.animes)
+        },
+        error: e => {
+          console.warn('We got an error fetching anime in the home page: ', e)
+        }
+      })
+  }
+
 
 }
