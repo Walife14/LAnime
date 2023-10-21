@@ -5,13 +5,16 @@
     <ul class="flex gap-x-2 gap-y-1 flex-wrap my-2">
       <li class="bg-background py-1 px-2 rounded-md text-sm font-light" *ngFor="let genre of fetchedAnime.genres">{{ genre.name }}</li>
     </ul>
-    <p class="text-sm">{{ fetchedAnime.synopsis }}</p>
+    <!-- synopsis -->
+    <div>
+      <p class="text-sm" [ngClass]="showMoreDescription ? '' : 'h-[4rem] overflow-hidden'">{{ fetchedAnime.synopsis }}</p>
+      <button class="underline" type="button" (click)="showMoreDescription = !showMoreDescription">{{ showMoreDescription ? 'read less...' : 'read more...' }}</button>
+    </div>
     <!-- Popular Characters -->
     <h2 class="text-xl font-semibold mt-2 mb-4">Popular Characters</h2>
     <ul class="grid grid-cols-4 gap-2 mt-2 [&>*:nth-child(even)]:mt-4">
       <li class="col-span-1 text-center text-xs" *ngFor="let character of popularCharacters">
-        <img class="rounded-full" [src]="character.character.images.jpg.image_url" alt="Character image">
-        <span>{{ character.name }}</span>
+        <img class="rounded-full shadow-black shadow-sm" [src]="character.character.images.jpg.image_url" alt="Character image">
       </li>
     </ul>
     <!-- Videos -->
@@ -27,7 +30,7 @@
     </ul>
     <!-- Video Modal -->
     <div *ngIf="showModal" tabindex="-1" aria-hidden="true">
-      <div class="h-screen w-screen fixed top-0 left-0 bg-gray-600/80 flex flex-col justify-center">
+      <div class="h-screen w-screen fixed top-0 left-0 bg-gray-600/80 flex flex-col justify-center z-20">
         <div>
           <button class="text-white py-4 px-4 text-left" type="button" (click)="closeVideo()">Close</button>
           <iframe class="w-full aspect-video" src="" id="video" allow="autoplay" frameborder="0"></iframe>
@@ -36,7 +39,7 @@
     </div>
     <!-- Fallback if there are no videos -->
     <ng-template #areThereVideos>
-      There are no videos/trailers for this anime.
+      <span class="text-red-500">No videos were found for this anime.</span>
     </ng-template>
     <!-- Recommended -->
     <h4 class="text-xl font-semibold mt-2 mb-4">Liked {{ fetchedAnime.title_english }}? Here are some similar recommendations!</h4>

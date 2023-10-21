@@ -23,6 +23,9 @@ export class AnimeComponent implements OnInit {
   // anime videos
   fetchedAnimeVideos?: any;
   showModal: boolean = false;
+
+  // synopsis button text
+  showMoreDescription: boolean = false;
   
   constructor(private animeService: AnimeService, private route: ActivatedRoute ) { }
 
@@ -62,7 +65,7 @@ export class AnimeComponent implements OnInit {
   fetchAnimeCharacters(animeId: string) {
     this.animeService.getAnimeCharacters(animeId).subscribe({
       next: data => {
-        console.log(data.data)
+        // console.log(data.data)
 
         // creating a sorted characters list based on number of favorites on character by vote
         let sortedCharacters = data.data.sort(
