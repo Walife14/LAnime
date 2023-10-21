@@ -9,7 +9,7 @@ export class AnimeService {
 
   constructor(private http: HttpClient) {}
 
-
+  // get a list of animes based on query/filters
   getAnimeList(pageNumber: number, title?: string, orderBy?: string, sortBy?: string, selectedGenres?: string[]): Observable<any> {
     const selectedGenresIdList = selectedGenres?.join()
     const apiURL = `https://api.jikan.moe/v4/anime?${title ? 'q=' + title + '&' :''}limit=6&page=${pageNumber}${orderBy ? '&order_by=' + orderBy :''}${sortBy ? '&sort=' + sortBy :''}${selectedGenres ? '&genres=' + selectedGenresIdList :''}`
@@ -17,16 +17,24 @@ export class AnimeService {
     return this.http.get(apiURL)
   }
 
+  // get a specific anime by id
+  getAnimeById(animeId: string): Observable<any> {
+    return this.http.get(`https://api.jikan.moe/v4/anime/${animeId}`)
+  }
 
+  // get anime videos
+  getAnimeVideosById(animeId: string): Observable<any> {
+    return this.http.get(`https://api.jikan.moe/v4/anime/${animeId}/videos`)
+  }
 
+  // get anime recommendations by id
+  getAnimeRecommendations(animeId: string): Observable<any>  {
+    return this.http.get(`https://api.jikan.moe/v4/anime/${animeId}/recommendations`)
+  }
 
-
-  // getAnime(pageNumber: number): Observable<any> {
-  //   return this.http.get('https://api.jikan.moe/v4/anime?limit=6&page=' + pageNumber)
-  // }
-
-  // searchAnime(q: any, pageNumber: number): Observable<any> {
-  //   return this.http.get(`https://api.jikan.moe/v4/anime?limit=6&page=${pageNumber}&q=${q}`)
-  // }
+  // get anime characters
+  getAnimeCharacters(animeId: string): Observable<any> {
+    return this.http.get(`https://api.jikan.moe/v4/anime/${animeId}/characters`)
+  }
 
 }

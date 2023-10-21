@@ -1,14 +1,56 @@
 <div class="mt-[3.5rem] mx-4">
-  <img class="w-full" src="../../assets/images/temporary-anime-cover.jpg" alt="Boku no Hero Academia cover">
-  <h1 class="text-3xl font-bold">Boku no Hero Academia</h1>
-  <ul class="flex gap-x-2 gap-y-1 flex-wrap my-2">
-    <li class="bg-background py-1 px-2 rounded-md text-sm font-light" *ngFor="let genre of genres">{{ genre }}</li>
-  </ul>
-  <p>Midoriya Izuku was just a regular middle school student in a world where people with superpowers known as Quirks are the norm. However, he dreams of one day becoming a Hero, despite being bullied by his classmates for not having a Quirk. After being the only one to try and save his childhood friend, Katsuki, from a Villain, All Might, the world's greatest Hero, bestows upon him his own quirk, One For All. The story follows Izuku's entrance into Yuuei High School, a school that cultivates the next generation of Heroes.</p>
-  <ul class="grid grid-cols-4 gap-2 mt-2 mb-10">
-    <li class="col-span-1 text-center text-xs" *ngFor="let character of characters.slice(0,4)">
-      <img class="rounded-full" src="../../assets/images/temporary-character-image.jpg" alt="Character image">
-      <span>{{ character.name }}</span>
-    </li>
-  </ul>
+  <div *ngIf="fetchedAnime != undefined; else loading">
+    <img class="w-full" [src]="fetchedAnime.images.jpg.large_image_url" alt="Boku no Hero Academia cover">
+    <h1 class="text-3xl font-bold mt-2 mb-4">{{ fetchedAnime.title_english }}</h1>
+    <ul class="flex gap-x-2 gap-y-1 flex-wrap my-2">
+      <li class="bg-background py-1 px-2 rounded-md text-sm font-light" *ngFor="let genre of fetchedAnime.genres">{{ genre.name }}</li>
+    </ul>
+    <p class="text-sm">{{ fetchedAnime.synopsis }}</p>
+    <!-- Popular Characters -->
+    <h2 class="text-xl font-semibold mt-2 mb-4">Popular Characters</h2>
+    <ul class="grid grid-cols-4 gap-2 mt-2 [&>*:nth-child(even)]:mt-4">
+      <li class="col-span-1 text-center text-xs" *ngFor="let character of popularCharacters">
+        <img class="rounded-full" [src]="character.character.images.jpg.image_url" alt="Character image">
+        <span>{{ character.name }}</span>
+      </li>
+    </ul>
+    <!-- Videos -->
+    <h3 class="text-xl font-semibold mt-2 mb-4">Videos</h3>
+    <ul *ngIf="fetchedAnimeVideos; else areThereVideos" class="grid grid-cols-2 gap-2">
+      <!-- <li class="col-span-1 h-[100px] bg-gray-900"></li> -->
+      <li *ngFor="let video of fetchedAnimeVideos">
+        <button class="relative" type="button" (click)="setUpVideo(video.trailer.embed_url)">
+          <img class="" [src]="video.trailer.images.medium_image_url" [alt]="video.title">
+          <img class="w-10 h-10 absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 drop-shadow-md shadow-black" src="../../assets/icons/play.svg">
+        </button>
+      </li>
+    </ul>
+    <!-- Video Modal -->
+    <div *ngIf="showModal" tabindex="-1" aria-hidden="true">
+      <div class="h-screen w-screen fixed top-0 left-0 bg-gray-600/80 flex flex-col justify-center">
+        <div>
+          <button class="text-white py-4 px-4 text-left" type="button" (click)="closeVideo()">Close</button>
+          <iframe class="w-full aspect-video" src="" id="video" allow="autoplay" frameborder="0"></iframe>
+        </div>
+      </div>
+    </div>
+    <!-- Fallback if there are no videos -->
+    <ng-template #areThereVideos>
+      There are no videos/trailers for this anime.
+    </ng-template>
+    <!-- Recommended -->
+    <h4 class="text-xl font-semibold mt-2 mb-4">Liked {{ fetchedAnime.title_english }}? Here are some similar recommendations!</h4>
+    <ul class="grid auto-cols-[10rem] grid-flow-col overflow-x-auto gap-2">
+      <li *ngFor="let anime of fetchedAnimeRecommendations">
+        <a class="flex flex-col items-center" [routerLink]="'/anime/' + anime.entry.mal_id" (click)="scrollToTop()">
+          <img class="h-[220px] w-full" [src]="anime.entry.images.jpg.image_url" [alt]="anime.entry.title + ' cover'">
+          <span>{{ anime.entry.title }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!-- If there is no anime fetched or if the ID is incorrect -->
+  <ng-template #loading>
+    Loading...
+  </ng-template>
 </div>
