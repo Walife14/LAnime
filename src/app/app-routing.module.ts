@@ -16,6 +16,9 @@ const routes: Routes = [
   {
     path: 'explore/anime',
     component: AnimeSearchComponent
+  },
+  {
+    path: '**', redirectTo: '', pathMatch: 'full'
   }
 ];
 
