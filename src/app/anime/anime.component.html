@@ -1,6 +1,6 @@
 <div class="mt-[3.5rem] mx-4">
   <div *ngIf="fetchedAnime != undefined; else loading">
-    <img class="w-full" [src]="fetchedAnime.images.jpg.large_image_url" alt="Boku no Hero Academia cover">
+    <img class="w-full" [src]="fetchedAnime.images.jpg.large_image_url" [alt]="fetchedAnime.title_english + ' cover'" loading="lazy" fetchpriority="high">
     <h1 class="text-3xl font-bold mt-2 mb-4">{{ fetchedAnime.title_english }}</h1>
     <ul class="flex gap-x-2 gap-y-1 flex-wrap my-2">
       <li class="bg-background py-1 px-2 rounded-md text-sm font-light" *ngFor="let genre of fetchedAnime.genres">{{ genre.name }}</li>
@@ -14,7 +14,7 @@
     <h2 class="text-xl font-semibold mt-2 mb-4">Popular Characters</h2>
     <ul class="grid grid-cols-4 gap-2 mt-2 [&>*:nth-child(even)]:mt-4">
       <li class="col-span-1 text-center text-xs" *ngFor="let character of popularCharacters">
-        <img class="rounded-full shadow-black shadow-sm" [src]="character.character.images.jpg.image_url" alt="Character image">
+        <img class="rounded-full shadow-black shadow-sm" [src]="character.character.images.jpg.image_url" alt="Character image" loading="lazy">
       </li>
     </ul>
     <!-- Videos -->
@@ -23,7 +23,7 @@
       <!-- <li class="col-span-1 h-[100px] bg-gray-900"></li> -->
       <li *ngFor="let video of fetchedAnimeVideos">
         <button class="relative" type="button" (click)="setUpVideo(video.trailer.embed_url)">
-          <img class="" [src]="video.trailer.images.medium_image_url" [alt]="video.title">
+          <img class="" [src]="video.trailer.images.medium_image_url" [alt]="video.title" loading="lazy">
           <img class="w-10 h-10 absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 drop-shadow-md shadow-black" src="../../assets/icons/play.svg">
         </button>
       </li>
@@ -46,7 +46,7 @@
     <ul class="grid auto-cols-[10rem] grid-flow-col overflow-x-auto gap-2">
       <li *ngFor="let anime of fetchedAnimeRecommendations">
         <a class="flex flex-col items-center" [routerLink]="'/anime/' + anime.entry.mal_id" (click)="scrollToTop()">
-          <img class="h-[220px] w-full" [src]="anime.entry.images.jpg.image_url" [alt]="anime.entry.title + ' cover'">
+          <img class="h-[220px] w-full" [src]="anime.entry.images.jpg.image_url" [alt]="anime.entry.title + ' cover'" loading="lazy">
           <span>{{ anime.entry.title }}</span>
         </a>
       </li>

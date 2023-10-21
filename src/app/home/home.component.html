@@ -2,7 +2,12 @@
   <div class="h-[80vh] bg-header-texture bg-cover bg-fixed flex justify-center">
     <h1 class="text-3xl font-bold mt-40">WELCOME</h1>
   </div>
-  <img class="h-[60vh] absolute bottom-20 left-1/2 -translate-x-1/2" src="../../assets/images/header-character-385x755.png" alt="Boku no Hero Midoriya">
+  <img
+    class="h-[60vh] absolute bottom-20 left-1/2 -translate-x-1/2"
+    src="../../assets/images/header-character-385x755.png"
+    loading="lazy"
+    alt="Midoriya from Boku no Hero"
+  >
 </div>
 <div class="mx-4">
   <div>
@@ -10,7 +15,7 @@
     <ul class="grid grid-cols-2 gap-2">
       <li class="flex" *ngFor="let anime of animes">
         <a class="" [routerLink]="'anime/' + anime.mal_id">
-          <img class="h-[285px]" [src]="anime.images.jpg.large_image_url" alt="">
+          <img class="h-[285px]" [src]="anime.images.jpg.large_image_url" loading="lazy" [alt]="anime.title + ' cover'">
         </a>
       </li>
     </ul>

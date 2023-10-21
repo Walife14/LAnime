@@ -69,7 +69,7 @@ export class AnimeSearchComponent implements OnInit {
   }
 
   getAnimeList(title?: string, orderBy?: string, sortBy?: string, selectedGenres?: string[]): void {
-    console.log(selectedGenres)
+    // console.log(selectedGenres)
     this.animeService.getAnimeList(this.pageNumber, title, orderBy, sortBy, selectedGenres)
       .subscribe({
         next: data => {

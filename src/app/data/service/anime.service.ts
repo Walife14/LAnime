@@ -13,7 +13,7 @@ export class AnimeService {
   getAnimeList(pageNumber: number, title?: string, orderBy?: string, sortBy?: string, selectedGenres?: string[]): Observable<any> {
     const selectedGenresIdList = selectedGenres?.join()
     const apiURL = `https://api.jikan.moe/v4/anime?${title ? 'q=' + title + '&' :''}limit=6&page=${pageNumber}${orderBy ? '&order_by=' + orderBy :''}${sortBy ? '&sort=' + sortBy :''}${selectedGenres ? '&genres=' + selectedGenresIdList :''}`
-    console.log("Getting", apiURL)
+    // console.log("Getting", apiURL)
     return this.http.get(apiURL)
   }
 

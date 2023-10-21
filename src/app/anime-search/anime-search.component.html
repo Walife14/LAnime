@@ -61,7 +61,7 @@
     <ul *ngIf="animes" class="grid grid-cols-2 gap-2">
       <li class="flex" *ngFor="let anime of animes">
         <a [routerLink]="'/anime/' + anime.mal_id">
-          <img class="h-[285px] w-full" [src]="anime.images.jpg.large_image_url" alt="Boku no Hero Academia image">
+          <img class="h-[285px] w-full" [src]="anime.images.jpg.large_image_url" loading="lazy" alt="Boku no Hero Academia image">
           <span class="text-sm">{{ anime.title }} - {{ anime.score }}</span>
         </a>
       </li>

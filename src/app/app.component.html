@@ -1,7 +1,7 @@
 <header class="absolute top-0 z-10 flex flex-wrap w-full">
     <div class="flex justify-between w-full p-4">
         <a routerLink="/">
-            <img class="h-6" src="../assets/icons/lanime-logo.svg" alt="LAnime Logo">
+            <img class="h-6" src="../assets/icons/lanime-logo.svg" loading="lazy" fetchpriority="high" alt="LAnime Logo">
         </a>
         <button type="button" (click)="displayNav =! displayNav"><img class="h-6" [src]="displayNav ? '../assets/icons/x-mark.svg' : '../assets/icons/hamburger.svg'"></button>
     </div>
