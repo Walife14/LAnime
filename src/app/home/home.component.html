@@ -1,21 +1,25 @@
 <div class="h-screen relative">
   <div class="h-[80vh] bg-header-texture bg-cover bg-fixed flex justify-center">
-    <h1 class="text-3xl font-bold mt-40">WELCOME</h1>
+    <div class="lg:w-4/6 lg:h-full">
+      <div class="lg:w-1/2 lg:h-full lg:flex lg:justify-center lg:items-center">
+        <h1 class="text-3xl font-bold mt-40 lg:mt-0">Your Anime Hub</h1>
+      </div>
+    </div>
+    <img
+      class="h-[60vh] absolute bottom-20 left-1/2 -translate-x-1/2 lg:-translate-x-0 lg:h-[70vh]"
+      src="../../assets/images/header-character-385x755.png"
+      loading="lazy"
+      alt="Midoriya from Boku no Hero"
+    >
   </div>
-  <img
-    class="h-[60vh] absolute bottom-20 left-1/2 -translate-x-1/2"
-    src="../../assets/images/header-character-385x755.png"
-    loading="lazy"
-    alt="Midoriya from Boku no Hero"
-  >
 </div>
-<div class="mx-4">
+<div class="mx-4 lg:mx-auto lg:w-4/6">
   <div>
     <h2 class="text-lg font-semibold">POPULAR</h2>
     <ul class="grid grid-cols-2 gap-2 md:grid-cols-4">
       <li class="flex" *ngFor="let anime of animes">
-        <a class="" [routerLink]="'anime/' + anime.mal_id">
-          <img class="h-[285px]" [src]="anime.images.jpg.large_image_url" loading="lazy" [alt]="anime.title + ' cover'">
+        <a class="w-full" [routerLink]="'anime/' + anime.mal_id">
+          <img class="h-[285px] lg:h-[380px] lg:w-full" [src]="anime.images.jpg.large_image_url" loading="lazy" [alt]="anime.title + ' cover'">
         </a>
       </li>
     </ul>
