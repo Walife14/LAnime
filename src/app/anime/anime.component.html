@@ -1,18 +1,22 @@
-<div class="mt-[3.5rem] mx-4">
+<div class="mt-[4.5rem] mx-4">
   <div *ngIf="fetchedAnime != undefined; else loading">
-    <img class="w-full" [src]="fetchedAnime.images.jpg.large_image_url" [alt]="fetchedAnime.title_english + ' cover'" loading="lazy" fetchpriority="high">
-    <h1 class="text-3xl font-bold mt-2 mb-4">{{ fetchedAnime.title_english }}</h1>
-    <ul class="flex gap-x-2 gap-y-1 flex-wrap my-2">
-      <li class="bg-background py-1 px-2 rounded-md text-sm font-light" *ngFor="let genre of fetchedAnime.genres">{{ genre.name }}</li>
-    </ul>
-    <!-- synopsis -->
-    <div>
-      <p class="text-sm" [ngClass]="showMoreDescription ? '' : 'h-[4rem] overflow-hidden'">{{ fetchedAnime.synopsis }}</p>
-      <button class="underline" type="button" (click)="showMoreDescription = !showMoreDescription">{{ showMoreDescription ? 'read less...' : 'read more...' }}</button>
+    <div class="md:flex">
+      <img class="w-full md:max-h-[420px]" [src]="fetchedAnime.images.jpg.large_image_url" [alt]="fetchedAnime.title_english + ' cover'" loading="lazy" fetchpriority="high">
+      <div class="md:pl-4">
+        <h1 class="text-3xl font-bold mt-2 mb-4 md:mt-0">{{ fetchedAnime.title_english }}</h1>
+        <ul class="flex gap-x-2 gap-y-1 flex-wrap my-2">
+          <li class="bg-background py-1 px-2 rounded-md text-sm font-light" *ngFor="let genre of fetchedAnime.genres">{{ genre.name }}</li>
+        </ul>
+        <!-- synopsis -->
+        <div>
+          <p class="text-sm" [ngClass]="showMoreDescription ? '' : 'h-[4rem] overflow-hidden'">{{ fetchedAnime.synopsis }}</p>
+          <button class="underline" type="button" (click)="showMoreDescription = !showMoreDescription">{{ showMoreDescription ? 'read less...' : 'read more...' }}</button>
+        </div>
+      </div>
     </div>
     <!-- Popular Characters -->
     <h2 class="text-xl font-semibold mt-2 mb-4">Popular Characters</h2>
-    <ul class="grid grid-cols-4 gap-2 mt-2 [&>*:nth-child(even)]:mt-4">
+    <ul class="grid grid-cols-4 gap-2 mt-2 [&>*:nth-child(even)]:mt-4 md:[&>*:nth-child(even)]:mt-14 md:gap-8">
       <li class="col-span-1 text-center text-xs" *ngFor="let character of popularCharacters">
         <img class="rounded-full shadow-black shadow-sm" [src]="character.character.images.jpg.image_url" alt="Character image" loading="lazy">
       </li>
@@ -43,14 +47,23 @@
     </ng-template>
     <!-- Recommended -->
     <h4 class="text-xl font-semibold mt-2 mb-4">Liked {{ fetchedAnime.title_english }}? Here are some similar recommendations!</h4>
-    <ul class="grid auto-cols-[10rem] grid-flow-col overflow-x-auto gap-2">
+    <!-- <ul class="grid auto-cols-[10rem] grid-flow-col overflow-x-auto gap-2">
       <li *ngFor="let anime of fetchedAnimeRecommendations">
         <a class="flex flex-col items-center" [routerLink]="'/anime/' + anime.entry.mal_id" (click)="scrollToTop()">
-          <img class="h-[220px] w-full" [src]="anime.entry.images.jpg.image_url" [alt]="anime.entry.title + ' cover'" loading="lazy">
+          <img class="" [src]="anime.entry.images.jpg.image_url" [alt]="anime.entry.title + ' cover'" loading="lazy">
+          <span>{{ anime.entry.title }}</span>
+        </a>
+      </li>
+    </ul> -->
+    <ul class="flex overflow-x-scroll gap-2">
+      <li class="flex-shrink-0 w-[220px]" *ngFor="let anime of fetchedAnimeRecommendations">
+        <a [routerLink]="'/anime/' + anime.entry.mal_id" (click)="scrollToTop()">
+          <img class="h-[330px] w-[220px]" [src]="anime.entry.images.jpg.image_url" [alt]="anime.entry.title + ' cover'" loading="lazy">
           <span>{{ anime.entry.title }}</span>
         </a>
       </li>
     </ul>
+
   </div>
   <!-- If there is no anime fetched or if the ID is incorrect -->
   <ng-template #loading>
