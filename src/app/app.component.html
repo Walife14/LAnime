@@ -1,15 +1,15 @@
-<header class="absolute top-0 z-10 flex flex-wrap w-full md:flex-nowrap">
+<header class="absolute top-0 z-10 flex flex-wrap w-full md:flex-nowrap lg:w-4/6 lg:left-1/2 lg:-translate-x-1/2">
     <div class="flex justify-between w-full items-center p-4 md:w-auto">
         <a routerLink="/">
             <img class="h-6" src="../assets/icons/lanime-logo.svg" loading="lazy" fetchpriority="high" alt="LAnime Logo">
         </a>
         <button class="md:hidden" type="button" (click)="displayNav =! displayNav"><img class="h-6" [src]="displayNav ? '../assets/icons/x-mark.svg' : '../assets/icons/hamburger.svg'"></button>
     </div>
-    <nav class="w-full overflow-hidden transition-all md:max-h-[100rem] md:" [ngClass]="displayNav ? 'max-h-[100rem]' : 'max-h-0'">
+    <nav class="w-full overflow-hidden transition-all md:max-h-[100rem]" [ngClass]="displayNav ? 'max-h-[100rem]' : 'max-h-0'">
         <ul class="bg-white grid grid-cols-2 gap-y-4 p-4 text-center md:bg-transparent md:grid-cols-8 md:items-center md:w-2/3 md:ml-auto">
             <li class="flex justify-center col-span-2 transition-all md:col-span-4 md:border" role="search">
                 <input
-                    class="bg-background p-2 focus:outline-none overflow-hidden rounded-none"
+                    class="bg-background p-2 focus:outline-none overflow-hidden rounded-none w-full"
                     type="text"
                     aria-label="search term"
                     placeholder="Search..."
