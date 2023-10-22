@@ -11,8 +11,8 @@
 </div>
 <div class="mx-4">
   <div>
-    <h2 class="text-lg">POPULAR</h2>
-    <ul class="grid grid-cols-2 gap-2">
+    <h2 class="text-lg font-semibold">POPULAR</h2>
+    <ul class="grid grid-cols-2 gap-2 md:grid-cols-4">
       <li class="flex" *ngFor="let anime of animes">
         <a class="" [routerLink]="'anime/' + anime.mal_id">
           <img class="h-[285px]" [src]="anime.images.jpg.large_image_url" loading="lazy" [alt]="anime.title + ' cover'">
