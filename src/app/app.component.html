@@ -7,15 +7,15 @@
     </div>
     <nav class="w-full overflow-hidden transition-all md:max-h-[100rem] md:" [ngClass]="displayNav ? 'max-h-[100rem]' : 'max-h-0'">
         <ul class="bg-white grid grid-cols-2 gap-y-4 p-4 text-center md:bg-transparent md:grid-cols-8 md:items-center md:w-2/3 md:ml-auto">
-            <li class="flex justify-center col-span-2 transition-all md:col-span-4" role="search">
+            <li class="flex justify-center col-span-2 transition-all md:col-span-4 md:border" role="search">
                 <input
-                    class="bg-background p-2 focus:outline-none overflow-hidden rounded-none md:bg-white"
+                    class="bg-background p-2 focus:outline-none overflow-hidden rounded-none"
                     type="text"
                     aria-label="search term"
                     placeholder="Search..."
                     [formControl]="searchInput"
                 >
-                <button class="bg-background p-2 md:bg-white" type="button" aria-label="search" (click)="searchForAnime(searchInput.value)">
+                <button class="bg-background p-2" type="button" aria-label="search" (click)="searchForAnime(searchInput.value)">
                     <img class="h-6 mx-auto" src="../assets/icons/search.svg">
                 </button>
             </li>

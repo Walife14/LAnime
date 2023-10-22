@@ -1,7 +1,7 @@
-<div class="mt-[3.5rem] mx-4">
+<div class="mt-[4.5rem] mx-4">
   <!-- filter section -->
   <div class="mb-4">
-    <div>
+    <div class="md:flex md:flex-row-reverse md:justify-between md:flex-wrap">
       <!-- Search by input -->
       <div class="flex justify-center col-span-2 transition-all mb-4" role="search">
         <input
@@ -15,57 +15,59 @@
             <img class="h-6 mx-auto" src="../assets/icons/search.svg">
         </button>
       </div>
-      <!-- sort by dropdown -->
-      <div class="relative mb-4">
-        <button class="w-full bg-white flex items-center justify-between rounded-md px-2 py-1 ring-1 ring-black ring-inset ring-opacity-50" aria-expanded="true" (click)="showSortbyList = !showSortbyList">
-          <span>Sort by</span>
-          <img class="h-5 w-5" src="../../assets/icons/chevron-down.svg">
-        </button>
-        <ul class="absolute bg-white z-10 w-full rounded-md mt-1 transition-all overflow-scroll" [ngClass]="showSortbyList? 'max-h-[30vh] ring-1 ring-black ring-opacity-5 shadow-lg' : 'max-h-0 -translate-y-1'">
-          <li class="relative cursor-pointer select-none py-1 px-2 hover:bg-background" role="sort by option">
-            <button type="button" (click)="sortByScore('asc')">Score (asc)</button>
-          </li>
-          <li class="relative cursor-pointer select-none py-1 px-2 hover:bg-background" role="sort by option">
-            <button type="button" (click)="sortByScore('desc')">Score (desc)</button>
-          </li>
-        </ul>
-      </div>
-      <!-- genre dropdown -->
-      <div class="relative">
-        <button class="w-full z-10 bg-white flex items-center justify-between rounded-md px-2 py-1 ring-1 ring-black ring-inset ring-opacity-50" aria-expanded="true" (click)="showGenresList = !showGenresList">
-          <span>Select genre(s)</span>
-          <img class="h-5 w-5" src="../../assets/icons/chevron-down.svg">
-        </button>
-        <ul class="absolute bg-white z-10 w-full rounded-md mt-1 transition-all overflow-scroll" [ngClass]="showGenresList ? 'max-h-[30vh] ring-1 ring-black ring-opacity-5 shadow-lg' : 'max-h-0 -translate-y-1'">
-          <!-- <li class="relative cursor-pointer select-none py-1 px-2 hover:bg-background" role="genre option" *ngFor="let genre of genres" (click)="changeSelectedGenres(genre)">
-            <span>{{ genre }}</span>
-          </li> -->
-          <li
-            class="relative cursor-pointer select-none py-1 px-2 hover:bg-background"
-            role="genre option"
-            *ngFor="let genre of genres"
-            (click)="changeSelectedGenres(genre.name, genre.mal_id)"
-          >
-            <span>{{ genre.name }}</span>
-          </li>
-        </ul>
+      <div class="md:flex md:gap-x-2">
+        <!-- sort by dropdown -->
+        <div class="relative mb-4">
+          <button class="w-full bg-white flex items-center justify-between rounded-md px-2 py-1 ring-1 ring-black ring-inset ring-opacity-50" aria-expanded="true" (click)="showSortbyList = !showSortbyList">
+            <span>Sort by</span>
+            <img class="h-5 w-5" src="../../assets/icons/chevron-down.svg">
+          </button>
+          <ul class="absolute bg-white z-10 w-full rounded-md mt-1 transition-all overflow-scroll" [ngClass]="showSortbyList? 'max-h-[30vh] ring-1 ring-black ring-opacity-5 shadow-lg' : 'max-h-0 -translate-y-1'">
+            <li class="relative cursor-pointer select-none py-1 px-2 hover:bg-background" role="sort by option">
+              <button type="button" (click)="sortByScore('asc')">Score (asc)</button>
+            </li>
+            <li class="relative cursor-pointer select-none py-1 px-2 hover:bg-background" role="sort by option">
+              <button type="button" (click)="sortByScore('desc')">Score (desc)</button>
+            </li>
+          </ul>
+        </div>
+        <!-- genre dropdown -->
+        <div class="relative">
+          <button class="w-full z-10 bg-white flex items-center justify-between rounded-md px-2 py-1 ring-1 ring-black ring-inset ring-opacity-50" aria-expanded="true" (click)="showGenresList = !showGenresList">
+            <span>Select genre(s)</span>
+            <img class="h-5 w-5" src="../../assets/icons/chevron-down.svg">
+          </button>
+          <ul class="absolute bg-white z-10 w-full rounded-md mt-1 transition-all overflow-scroll" [ngClass]="showGenresList ? 'max-h-[30vh] ring-1 ring-black ring-opacity-5 shadow-lg' : 'max-h-0 -translate-y-1'">
+            <!-- <li class="relative cursor-pointer select-none py-1 px-2 hover:bg-background" role="genre option" *ngFor="let genre of genres" (click)="changeSelectedGenres(genre)">
+              <span>{{ genre }}</span>
+            </li> -->
+            <li
+              class="relative cursor-pointer select-none py-1 px-2 hover:bg-background"
+              role="genre option"
+              *ngFor="let genre of genres"
+              (click)="changeSelectedGenres(genre.name, genre.mal_id)"
+            >
+              <span>{{ genre.name }}</span>
+            </li>
+          </ul>
+        </div>
       </div>
       <!-- list of selected genres -->
-      <ul class="col-span-2 flex gap-x-2 gap-y-1 flex-wrap my-2">
+      <ul class="flex gap-x-2 gap-y-1 flex-wrap my-2 md:w-full">
         <li class="bg-background py-1 px-2 rounded-md text-sm font-light" *ngFor="let genre of selectedGenres">{{ genre }}</li>
       </ul>
     </div>
   </div>
   <!-- display anime section -->
-  <div>
-    <ul *ngIf="animes" class="grid grid-cols-2 gap-2">
-      <li class="flex" *ngFor="let anime of animes">
-        <a [routerLink]="'/anime/' + anime.mal_id">
-          <img class="h-[285px] w-full" [src]="anime.images.jpg.large_image_url" loading="lazy" alt="Boku no Hero Academia image">
+  <div class="md:text-center">
+    <ul *ngIf="animes" class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-x-6 md:grid">
+      <li *ngFor="let anime of animes">
+        <a class="md:flex md:flex-col md:mx-auto md:w-[190px]" [routerLink]="'/anime/' + anime.mal_id">
+          <img class="h-[285px] w-[190px]" [src]="anime.images.jpg.large_image_url" loading="lazy" alt="Boku no Hero Academia image">
           <span class="text-sm">{{ anime.title }} - {{ anime.score }}</span>
         </a>
       </li>
     </ul>
-    <button class="w-full py-1 my-5 ring-black ring-1" type="button" (click)="getMoreAnime()">Load More</button>
+    <button class="w-full py-1 my-5 ring-black ring-1 md:max-w-[400px]" type="button" (click)="getMoreAnime()">Load More</button>
   </div>
 </div>
