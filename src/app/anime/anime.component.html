@@ -1,4 +1,4 @@
-<div class="mt-[4.5rem] mx-4">
+<div class="mt-[4.5rem] mx-4 lg:mx-auto lg:w-4/6">
   <div *ngIf="fetchedAnime != undefined; else loading">
     <div class="md:flex">
       <img class="w-full md:max-h-[420px]" [src]="fetchedAnime.images.jpg.large_image_url" [alt]="fetchedAnime.title_english + ' cover'" loading="lazy" fetchpriority="high">
@@ -17,17 +17,16 @@
     <!-- Popular Characters -->
     <h2 class="text-xl font-semibold mt-2 mb-4">Popular Characters</h2>
     <ul class="grid grid-cols-4 gap-2 mt-2 [&>*:nth-child(even)]:mt-4 md:[&>*:nth-child(even)]:mt-14 md:gap-8">
-      <li class="col-span-1 text-center text-xs" *ngFor="let character of popularCharacters">
-        <img class="rounded-full shadow-black shadow-sm" [src]="character.character.images.jpg.image_url" alt="Character image" loading="lazy">
+      <li class="col-span-1 text-xs" *ngFor="let character of popularCharacters">
+        <img class="rounded-full shadow-black shadow-sm w-full" [src]="character.character.images.jpg.image_url" alt="Character image" loading="lazy">
       </li>
     </ul>
     <!-- Videos -->
     <h3 class="text-xl font-semibold mt-2 mb-4">Videos</h3>
-    <ul *ngIf="fetchedAnimeVideos; else areThereVideos" class="grid grid-cols-2 gap-2">
-      <!-- <li class="col-span-1 h-[100px] bg-gray-900"></li> -->
-      <li *ngFor="let video of fetchedAnimeVideos">
+    <ul *ngIf="fetchedAnimeVideos; else areThereVideos" class="grid grid-cols-2 gap-2 lg:grid-cols-3">
+      <li class="flex justify-center" *ngFor="let video of fetchedAnimeVideos">
         <button class="relative" type="button" (click)="setUpVideo(video.trailer.embed_url)">
-          <img class="" [src]="video.trailer.images.medium_image_url" [alt]="video.title" loading="lazy">
+          <img class="border" [src]="video.trailer.images.medium_image_url" [alt]="video.title" loading="lazy">
           <img class="w-10 h-10 absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 drop-shadow-md shadow-black" src="../../assets/icons/play.svg">
         </button>
       </li>
