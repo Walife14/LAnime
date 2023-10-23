@@ -46,23 +46,14 @@
     </ng-template>
     <!-- Recommended -->
     <h4 class="text-xl font-semibold mt-2 mb-4">Liked {{ fetchedAnime.title_english }}? Here are some similar recommendations!</h4>
-    <!-- <ul class="grid auto-cols-[10rem] grid-flow-col overflow-x-auto gap-2">
-      <li *ngFor="let anime of fetchedAnimeRecommendations">
-        <a class="flex flex-col items-center" [routerLink]="'/anime/' + anime.entry.mal_id" (click)="scrollToTop()">
-          <img class="" [src]="anime.entry.images.jpg.image_url" [alt]="anime.entry.title + ' cover'" loading="lazy">
-          <span>{{ anime.entry.title }}</span>
-        </a>
-      </li>
-    </ul> -->
     <ul class="flex overflow-x-scroll gap-2">
-      <li class="flex-shrink-0 w-[220px]" *ngFor="let anime of fetchedAnimeRecommendations">
+      <li class="flex-shrink-0 h-auto w-[30%] lg:w-[25%]" *ngFor="let anime of fetchedAnimeRecommendations">
         <a [routerLink]="'/anime/' + anime.entry.mal_id" (click)="scrollToTop()">
-          <img class="h-[330px] w-[220px]" [src]="anime.entry.images.jpg.image_url" [alt]="anime.entry.title + ' cover'" loading="lazy">
-          <span>{{ anime.entry.title }}</span>
+          <img class="w-full h-[10rem] md:h-[20rem] lg:h-[25rem]" [src]="anime.entry.images.jpg.image_url" [alt]="anime.entry.title + ' cover'" loading="lazy">
+          <span class="text-sm">{{ anime.entry.title }}</span>
         </a>
       </li>
     </ul>
-
   </div>
   <!-- If there is no anime fetched or if the ID is incorrect -->
   <ng-template #loading>
