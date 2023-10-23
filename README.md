@@ -1,27 +1,26 @@
 # LAnime
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.1.
+## Overview
 
-## Development server
+### My challenge
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+ - Create an anime hub website that has information about specific anime
+ - Successfuly interact with REST API using documentation (Jikan v4 Docs)
+ - Allow the user to search for an anime by name
+ - Allow the user to filter and sort by using genre
+ - Implement fully responsive design for all devices
+ - Use Figma to envision design before implementation
 
-## Code scaffolding
+### Links
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+ - Live Site URL: (https://stellular-twilight-b5a71a.netlify.app/)
+ - Figma Design URL: (https://www.figma.com/file/PNLgfDBw3kPGHxux4N4y6T/LAnime?type=design&node-id=0%3A1&mode=design&t=ovl42CmvQKOWPHbp-1)
+ - Jikan API URL: (https://docs.api.jikan.moe/)
 
-## Build
+### Built with
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+ - HTML/CSS/Typescript
+ - Angular
+ - Jikan open-source REST API (Link: https://jikan.moe/)
+ - Tailwindcss
+ - Mobile-first approach
