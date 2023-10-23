@@ -46,14 +46,20 @@
     </ng-template>
     <!-- Recommended -->
     <h4 class="text-xl font-semibold mt-2 mb-4">Liked {{ fetchedAnime.title_english }}? Here are some similar recommendations!</h4>
-    <ul class="flex overflow-x-scroll gap-2">
-      <li class="flex-shrink-0 h-auto w-[30%] lg:w-[25%]" *ngFor="let anime of fetchedAnimeRecommendations">
-        <a [routerLink]="'/anime/' + anime.entry.mal_id" (click)="scrollToTop()">
-          <img class="w-full h-[10rem] md:h-[20rem] lg:h-[25rem]" [src]="anime.entry.images.jpg.image_url" [alt]="anime.entry.title + ' cover'" loading="lazy">
-          <span class="text-sm">{{ anime.entry.title }}</span>
-        </a>
-      </li>
-    </ul>
+    <div class="relative">
+      <!-- scroll left button -->
+      <button class="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full" (click)="scrollRecommendations('left')"><img class="h-10 w-10" src="../../assets/icons/chevron-left.svg" alt="left arrow"></button>
+      <ul class="flex overflow-x-scroll gap-2 scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]" #recommendationsContainer>
+        <li class="flex-shrink-0 h-auto w-[30%] lg:w-[25%]" *ngFor="let anime of fetchedAnimeRecommendations">
+          <a [routerLink]="'/anime/' + anime.entry.mal_id" (click)="scrollToTop()">
+            <img class="w-full h-[10rem] md:h-[20rem] lg:h-[25rem]" [src]="anime.entry.images.jpg.image_url" [alt]="anime.entry.title + ' cover'" loading="lazy">
+            <span class="text-sm">{{ anime.entry.title }}</span>
+          </a>
+        </li>
+      </ul>
+      <!-- scroll right button -->
+      <button class="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-full" (click)="scrollRecommendations('right')"><img class="h-10 w-10" src="../../assets/icons/chevron-right.svg" alt="right arrow"></button>
+    </div>
   </div>
   <!-- If there is no anime fetched or if the ID is incorrect -->
   <ng-template #loading>

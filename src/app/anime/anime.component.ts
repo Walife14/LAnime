@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeService } from '../data/service/anime.service';
 import { FetchedAnime } from '../core/models/fetchedAnime';
@@ -26,6 +26,10 @@ export class AnimeComponent implements OnInit {
 
   // synopsis button text
   showMoreDescription: boolean = false;
+
+  // Variable to hold the recommendations container for scrolling feature
+  @ViewChild('recommendationsContainer') recommendationsContainer: any;
+
   
   constructor(private animeService: AnimeService, private route: ActivatedRoute ) { }
 
@@ -129,6 +133,28 @@ export class AnimeComponent implements OnInit {
     document.body.style.height = 'auto'
     document.body.style.overflow = 'auto'
 
+  }
+  
+  // function to handle scrolling in recommendations container
+  // scrollRecommendedLeft() {
+  //   console.log("scrolling left");
+  //   this.recommendationsContainer.nativeElement.scrollBy({
+  //     left: -1000,
+  //     behavior: "smooth"
+  //   })
+  // }
+  // scrollRecommendedRight() {
+  //   console.log("scrolling right");
+  //   this.recommendationsContainer.nativeElement.scrollBy({
+  //     left: 1000,
+  //     behavior: "smooth"
+  //   })
+  // }
+  scrollRecommendations(direction: string) {
+    this.recommendationsContainer.nativeElement.scrollBy({
+      left: direction === "right" ? 500 : -500,
+      behavior: "smooth"
+    })
   }
 
   scrollToTop(): void {
