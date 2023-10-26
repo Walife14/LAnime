@@ -57,22 +57,19 @@
   </div>
   <!-- display anime section -->
   <div class="md:text-center">
-    <ul *ngIf="animes" class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-x-6 md:grid">
-      <li *ngFor="let anime of animes">
-        <a class="md:flex md:flex-col md:mx-auto md:w-[190px] lg:w-full lg:h-auto" [routerLink]="'/anime/' + anime.mal_id">
-          <img class="h-[285px] w-[190px] lg:w-full lg:h-[480px]" [src]="anime.images.jpg.large_image_url" loading="lazy" alt="Boku no Hero Academia image">
-          <span class="text-sm">{{ anime.title }} - {{ anime.score }}</span>
-        </a>
-      </li>
-    </ul>
-    <!-- <ul *ngIf="animes" class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-x-6 md:grid">
-      <li *ngFor="let anime of animes">
-        <a class="md:flex md:flex-col md:mx-auto md:w-[190px]" [routerLink]="'/anime/' + anime.mal_id">
-          <img class="h-[285px] w-[190px]" [src]="anime.images.jpg.large_image_url" loading="lazy" alt="Boku no Hero Academia image">
-          <span class="text-sm">{{ anime.title }} - {{ anime.score }}</span>
-        </a>
-      </li>
-    </ul> -->
-    <button class="w-full py-1 my-5 ring-black ring-1 md:max-w-[400px]" type="button" (click)="getMoreAnime()">Load More</button>
+    <div *ngIf="animes">
+      <ul class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-x-6 md:grid">
+        <li *ngFor="let anime of animes">
+          <a class="md:flex md:flex-col md:mx-auto md:w-[190px] lg:w-full lg:h-auto" [routerLink]="'/anime/' + anime.mal_id">
+            <img class="h-[285px] w-[190px] lg:w-full lg:h-[480px]" [src]="anime.images.jpg.large_image_url" loading="lazy" alt="Boku no Hero Academia image">
+            <span class="text-sm">{{ anime.title }} - {{ anime.score }}</span>
+          </a>
+        </li>
+      </ul>
+      <button class="w-full py-1 my-5 ring-black ring-1 md:max-w-[400px]" type="button" (click)="getMoreAnime()">Load More</button>
+    </div>
+    <div *ngIf="loadingHandler.isLoading$ | async">
+      Loading<span class="animate-ping">...</span>
+    </div>
   </div>
 </div>

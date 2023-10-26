@@ -7,6 +7,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 // importing JSON file containing genres with ID and name of each genre
 import importedGenres from '../data/json/genres.json'
+import { LoadingHandler } from '../shared/models/loading-handler';
 
 const CACHE_KEY = 'httpAnimesCache'
 
@@ -16,6 +17,8 @@ const CACHE_KEY = 'httpAnimesCache'
   styleUrls: ['./anime-search.component.css']
 })
 export class AnimeSearchComponent implements OnInit {
+
+  loadingHandler = new LoadingHandler()
 
   animes: any;
   pageNumber: number = 1;
@@ -69,6 +72,7 @@ export class AnimeSearchComponent implements OnInit {
   }
 
   getAnimeList(title?: string, orderBy?: string, sortBy?: string, selectedGenres?: string[]): void {
+    this.loadingHandler.start()
     // console.log(selectedGenres)
     this.animeService.getAnimeList(this.pageNumber, title, orderBy, sortBy, selectedGenres)
       .subscribe({
@@ -80,6 +84,7 @@ export class AnimeSearchComponent implements OnInit {
             this.animes = []
             this.animes = this.animes.concat(data.data)
           }
+          if (this.animes) this.loadingHandler.finish()
           this.pageNumber++
         },
         error: e => {
